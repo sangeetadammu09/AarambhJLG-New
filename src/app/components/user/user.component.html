@@ -1,0 +1,582 @@
+<!-- Page body -->
+<div class="page-body">
+    <div class="container-xl">
+      <div class="row row-cards">
+        <div class="col-12">
+            <div class="card">
+              <div class="card-header">
+                <div class="col-lg-10 mb-3 mt-2">
+                    <h3 class="card-title">List of Users</h3>
+                </div>
+                
+                <div class="col-lg-2 mb-3 mt-2">
+                    <button class="btn btn-primary btn-pill w-100" data-toggle="modal" data-target="#addUserModal"
+                (click)="showaddUserModal()">Add User</button>
+                </div>
+              </div>
+              
+            
+
+              <div class="table-responsive" *ngIf="pageLoaded">
+                <table class="table card-table table-vcenter text-nowrap datatable" style="border-color: #fff;" *ngIf="userList.length != 0">
+                    
+                      <tr style="background-color:#1d4ed8;">
+                        <th scope="col" style="color: #fff;">S No.</th>
+                        <th scope="col" style="color: #fff;">Name</th>
+                        <th scope="col" style="color: #fff;">Email</th>
+                        <th scope="col" style="color: #fff;">Contact</th>
+                        <th scope="col" style="color: #fff;">Address</th> 
+                        <th scope="col" style="color: #fff;">Details</th>
+                      </tr>
+                    
+                 
+             
+                <tbody *ngFor="let item of userList| paginate: { itemsPerPage: pageSize, currentPage: page, totalItems: total } ; let i = index ">
+                  <tr>
+                    <td>{{pageSize*(page-1)+i+1}}</td>
+                    <td>{{item.usersInfo.fullName}}</td> 
+                    <td>{{item.usersInfo.email}}</td>
+                    <td>{{item.usersInfo.mobileNo}}</td>
+                    <td>{{item.usersInfo.address}}</td>
+                    <td (click)="showUserModal(item)" data-toggle="modal" data-target="#showUserModal">
+                        <svg enable-background="new 0 0 48 48" height="32px" id="Layer_1" version="1.1" viewBox="0 0 48 48"  width="32px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg"
+                         xmlns:xlink="http://www.w3.org/1999/xlink">
+                        <path clip-rule="evenodd"
+                            d="M37,47H11c-2.209,0-4-1.791-4-4V5c0-2.209,1.791-4,4-4h18.973  c0.002,0,0.005,0,0.007,0h0.02H30c0.32,0,0.593,0.161,0.776,0.395l9.829,9.829C40.84,11.407,41,11.68,41,12l0,0v0.021  c0,0.002,0,0.003,0,0.005V43C41,45.209,39.209,47,37,47z M31,4.381V11h6.619L31,4.381z M39,13h-9c-0.553,0-1-0.448-1-1V3H11  C9.896,3,9,3.896,9,5v38c0,1.104,0.896,2,2,2h26c1.104,0,2-0.896,2-2V13z M33,39H15c-0.553,0-1-0.447-1-1c0-0.552,0.447-1,1-1h18  c0.553,0,1,0.448,1,1C34,38.553,33.553,39,33,39z M33,31H15c-0.553,0-1-0.447-1-1c0-0.552,0.447-1,1-1h18c0.553,0,1,0.448,1,1  C34,30.553,33.553,31,33,31z M33,23H15c-0.553,0-1-0.447-1-1c0-0.552,0.447-1,1-1h18c0.553,0,1,0.448,1,1C34,22.553,33.553,23,33,23  z"
+                            fill-rule="evenodd" />
+                        </svg>
+                    </td>                    
+                  </tr>        
+                </tbody>
+                
+               </table>
+               <div class="card-footer d-flex align-items-center" style="background-color: #fff;" *ngIf="userList.length != 0">
+                <div class="col-lg-12 d-flex justify-content-end pagination-custom pt-2">
+                    <pagination-controls previousLabel="Prev"nextLabel="Next" [responsive]="true"
+                    (pageChange)="handlePageChange($event)"></pagination-controls>
+                </div>
+              </div>
+              <div class="row card mb-3" *ngIf="userList.length == 0">
+                <p class="text-center">No User found</p>
+              </div>
+              </div>
+              <div class="container-xl mt-3" *ngIf="!pageLoaded">
+                <div class="d-flex justify-content-center">
+                  <div class="spinner-border" role="status">
+                    <span class="sr-only">Loading...</span>
+                  </div>
+                        &nbsp;
+                    <h3 class="text-center mr-2">Data loading. Please Hold on!</h3>
+                </div>
+              </div>
+
+        
+      </div>
+    </div>
+</div>
+</div>
+</div>
+
+
+<!-- add User modal -->
+<div class="modal fade" id="addUserModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">{{addUserTitle}}</h5>       
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close" #closeaddUserBtn>
+            <span aria-hidden="true">&times;</span>
+          </button>    
+        </div>
+        <div class="modal-body scrollable-modal">
+            <div class="tab-slider--nav">
+                <ul class="tab-slider--tabs">
+                  <li class="tab-slider--trigger" [class.active]="viewMode == 'tab1'" rel="tab1" (click)="viewMode ='tab1';addProdTab()">Add User</li>
+                  <li class="tab-slider--trigger" [class.active]="viewMode == 'tab2'" rel="tab2" (click)="viewMode ='tab2';uploadProdImages()">Documents</li>
+                  <li class="tab-slider--trigger" [class.active]="viewMode == 'tab3'" rel="tab3" (click)="viewMode ='tab3';uploadKycDocument()">KYC Documents</li>
+                </ul>
+            </div>
+            <div class="tab-slider--container" [ngSwitch]="viewMode">
+                <div id="tab1" class="tab-slider--body" *ngSwitchCase="'tab1'">
+                    <form [formGroup]="addUserForm" (ngSubmit)="submitNewUser()">
+                        <div class="row">
+                            <div class="form-group col-lg-6">
+                                <label class="form-control-label">Name<span style="color: crimson; font-weight: bold; font-size: large;"> *</span></label>
+                                <input type="text" class="form-control" formControlName="fullName" name="fullName"  
+                                [ngClass]="{'is-invalid':(submitted && f['fullName'].errors) ||(f['fullName'].errors && f['fullName'].touched) }">
+                                    <div *ngIf="(submitted && f['fullName'].errors) ||(f['fullName'].errors && f['fullName'].touched)" class="invalid-feedback">
+                                        <div *ngIf="f['fullName'].errors['required']">
+                                            Name is required
+                                        </div>
+                                        <div *ngIf="f['fullName'].errors['pattern']">
+                                            Only Characters are allowed
+                                          </div>
+                                 </div>
+                            </div>
+                            <div class="form-group col-lg-6">
+                                <label class="form-control-label">Email<span style="color: crimson; font-weight: bold; font-size: large;"> *</span></label>
+                                <input type="text" class="form-control" formControlName="email" name="email"  
+                                [ngClass]="{'is-invalid':(submitted && f['email'].errors) ||(f['email'].errors && f['email'].touched) }">
+                                    <div *ngIf="(submitted && f['email'].errors) ||(f['email'].errors && f['email'].touched)" class="invalid-feedback">
+                                        <div *ngIf="f['email'].errors['required']">
+                                            Email is required
+                                        </div>
+                                        <div *ngIf="f['email'].errors['pattern']">
+                                            Email address is invalid
+                                          </div>
+                                 </div>
+                            </div>
+                            
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-lg-6">
+                                <label class="form-control-label">Contact<span style="color: crimson; font-weight: bold; font-size: large;"> *</span></label>
+                                <input type="text" class="form-control" formControlName="mobileNo" name="mobileNo"  (change)="verifyContact($event)"
+                                [ngClass]="{'is-invalid':(submitted && f['mobileNo'].errors) ||(f['mobileNo'].errors && f['mobileNo'].touched) }">
+                                    <div *ngIf="(submitted && f['mobileNo'].errors) ||(f['mobileNo'].errors && f['mobileNo'].touched)" class="invalid-feedback">
+                                        <div *ngIf="f['mobileNo'].errors['required']">
+                                            Contact is required
+                                        </div>
+                                        <div *ngIf="f['mobileNo'].errors['pattern']">
+                                            Please, Enter 10 digit Contact Number
+                                        </div>
+                                 </div>
+                                 <div *ngIf="isMobileExists" class="text-red">Mobile already exists</div>
+                                 
+                            </div>
+                            <div class="form-group col-lg-6">
+                                <label class="form-control-label">Alternate Contact<span style="color: crimson; font-weight: bold; font-size: large;"> *</span></label>
+                                <input type="text" class="form-control" formControlName="alternateMobileNo" name="alternateMobileNo"  
+                                [ngClass]="{'is-invalid':(submitted && f['alternateMobileNo'].errors) ||(f['alternateMobileNo'].errors && f['alternateMobileNo'].touched) }">
+                                    <div *ngIf="(submitted && f['alternateMobileNo'].errors) ||(f['alternateMobileNo'].errors && f['alternateMobileNo'].touched)" class="invalid-feedback">
+                                        <div *ngIf="f['alternateMobileNo'].errors['required']">
+                                            Alternate Contact is required
+                                        </div>
+                                        <div *ngIf="f['alternateMobileNo'].errors['pattern']">
+                                            Please, Enter 10 digit Contact Number
+                                          </div>
+                                 </div>
+                            </div>
+                            
+
+                        </div>
+
+                        
+                        <div class="row">
+                            <div class="form-group col-lg-6">
+                                <label class="form-control-label">User Name<span style="color: crimson; font-weight: bold; font-size: large;"> *</span></label>
+                                <input type="text" class="form-control" formControlName="username" name="username"  
+                                [ngClass]="{'is-invalid':(submitted && f['username'].errors) ||(f['username'].errors && f['username'].touched) }">
+                                <div *ngIf="(submitted && f['username'].errors) ||(f['username'].errors && f['username'].touched)" class="invalid-feedback">
+                                    <div *ngIf="f['username'].errors['required']">
+                                            Sales Tax Group is required
+                                    </div>
+                                 </div>
+                            </div>
+                            <div class="form-group col-lg-6">
+                                <label class="form-control-label">Date of Birth<span style="color: crimson; font-weight: bold; font-size: large;"> *</span></label>
+                                <input type="date" (change)="changeDateOfBirth($event)" class="form-control" formControlName="dateOfBirth" name="dateOfBirth"  
+                                [ngClass]="{'is-invalid':(submitted && f['dateOfBirth'].errors) ||(f['dateOfBirth'].errors && f['dateOfBirth'].touched) }">
+                                    <div *ngIf="(submitted && f['dateOfBirth'].errors) ||(f['dateOfBirth'].errors && f['dateOfBirth'].touched)" class="invalid-feedback">
+                                        <div *ngIf="f['dateOfBirth'].errors['required']">
+                                            Date of Birth is required
+                                        </div>
+                                 </div>
+                                        
+
+                            </div>
+                            
+                        </div>
+
+                        <div class="row">
+                            
+                            <div class="form-group col-lg-12">
+                                <label class="form-control-label">Address<span style="color: crimson; font-weight: bold; font-size: large;"> *</span></label>
+                                <textarea formControlName="address" name="address"  class="form-control"  id="address" rows="3"
+                                [ngClass]="{'is-invalid':(submitted && f['address'].errors) ||(f['address'].errors && f['address'].touched) }"
+                                ></textarea>
+                                <div *ngIf="(submitted && f['address'].errors) ||(f['address'].errors && f['address'].touched)" class="invalid-feedback">
+                                        <div *ngIf="f['address'].errors['required']">
+                                            Address is required
+                                        </div>
+                                </div>
+                            </div>
+                            <div class="form-group col-lg-6">
+                                <label class="form-control-label">Family Members<span style="color: crimson; font-weight: bold; font-size: large;"> *</span></label>
+                                <!-- <textarea formControlName="familyDetails" name="familyDetails"  class="form-control"  id="familyDetails" rows="3"
+                                [ngClass]="{'is-invalid':(submitted && f['familyDetails'].errors) ||(f['familyDetails'].errors && f['familyDetails'].touched) }"
+                                ></textarea> -->
+                                <input type="text" class="form-control" formControlName="familyDetails" name="familyDetails"  
+                                [ngClass]="{'is-invalid':(submitted && f['familyDetails'].errors) ||(f['familyDetails'].errors && f['familyDetails'].touched) }">
+                                <div *ngIf="(submitted && f['familyDetails'].errors) ||(f['familyDetails'].errors && f['familyDetails'].touched)" class="invalid-feedback">
+                                        <div *ngIf="f['familyDetails'].errors['required']">
+                                            Family Members is required
+                                        </div>
+                                        <div *ngIf="f['familyDetails'].errors['pattern']">
+                                           Only Numbers are accepted
+                                        </div>
+                                </div>
+                            </div>
+                            <div class="form-group col-lg-6">
+                                <label class="form-control-label">City<span style="color: crimson; font-weight: bold; font-size: large;"> *</span></label>
+                                <select class="custom-select"  formControlName="cityId" name="cityId" id="cityId"
+                                [ngClass]="{'is-invalid':(submitted && g['cityId'].errors) ||(g['cityId'].errors && g['cityId'].touched) }">
+                                <option value="" [selected]="''">Choose..</option>
+                                    <option *ngFor="let item of cityList" [ngValue]="item.cityId">
+                                        {{item.cityName }}</option>
+                                </select>
+                                    <div *ngIf="(submitted && f['cityId'].errors) ||(f['cityId'].errors && f['cityId'].touched)" class="invalid-feedback">
+                                        <div *ngIf="f['cityId'].errors['required']">
+                                            City is required
+                                        </div>
+                                 </div>
+                            </div>
+                            <div class="form-group col-lg-6">
+                                <label class="form-control-label">Status</label><br/>
+                                <div class="form-check form-check-inline">
+                                <label class="form-check-label p-0" for="active">
+                                <input class="form-check-input" type="radio" formControlName="isActive" name="isActive" id="status" value="true"
+                                [ngClass]="{'is-invalid':(submitted && f['isActive'].errors) ||(f['isActive'].errors && f['isActive'].touched) }">Active
+                                </label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                <label class="form-check-label p-0 mt-3" for="inactive">
+                                <input class="form-check-input" type="radio" formControlName="isActive" name="isActive" id="status" value="false"
+                                [ngClass]="{'is-invalid':(submitted && f['isActive'].errors) ||(f['isActive'].errors && f['isActive'].touched) }">Inactive
+                                </label>
+                                </div>
+                                <div *ngIf="(submitted && f['isActive'].errors) ||(f['isActive'].errors && f['isActive'].touched)" class="invalid-feedback">
+                                    <div *ngIf="f['isActive'].errors['required']">Status is required</div> 
+                                </div>
+                            </div>
+                        </div>
+                        
+        
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-primary" [disabled]="isItemAdded">Save</button>
+                          </div>
+                    </form>
+                </div>
+                <div id="tab2" class="tab-slider--body" *ngSwitchCase="'tab2'">
+                    <form>
+                        <div class="form-row mb-3">
+                            <label class="form-control-label">Aadhaar Front <span> [png/jpg only]</span></label>
+                            
+                            <div class="input-group col-sm-12">     
+                                <div class="custom-file">
+                                    <input type="file" class="custom-file-input" id="customFile" name="aadhaarFrontDocument" 
+                                    (change)="uploadAadhaarFrontDocument($event)">
+                                    <label class="custom-file-label" for="file">{{aadhaarFrontDocumentName}}</label>    
+                                </div>
+                                <button class="btn btn-primary btn-md" type="button" [disabled]="disableAFDocumentBtn" (click)="submitAFDocument()">Upload</button>
+                            </div>
+
+                        </div>
+                        <div class="form-row mb-3">
+                            <label class="form-control-label">Aadhaar Back <span> [png/jpg only]</span></label>
+                          
+                                <div class="input-group col-sm-12">     
+                                    <div class="custom-file">
+                                        <input type="file" class="custom-file-input" id="customFile" name="aadhaarBackDocument" 
+                                    (change)="uploadAadhaarBackDocument($event)">
+                                    <label class="custom-file-label" for="customFile">{{aadhaarBackDocumentName}}</label>  
+                                    </div>
+                                    <button class="btn btn-primary btn-md" type="button"  [disabled]="disableABDocumentBtn" (click)="submitABDocument()">Upload</button>
+                                </div>  
+                        </div>
+                        <div class="form-row mb-3">
+                            <label class="form-control-label">Photo<span> [png/jpg only]</span></label>
+                    
+                                    <div class="input-group col-sm-12">     
+                                        <div class="custom-file">
+                                            <input type="file" class="custom-file-input" id="customFile" name="photoDocument" 
+                                            (change)="uploadPhotoDocument($event)">
+                                            <label class="custom-file-label" for="customFile">{{photoDocumentName}}</label>
+                                        </div>
+                                        <button class="btn btn-primary btn-md" type="button" 
+                                        [disabled]="disablePhotoDocumentBtn" (click)="submitPhoto()">Upload</button>
+                                    </div>
+                                
+                        </div>
+                        <div class="form-row mb-3">
+                            <label class="form-control-label">Address<span> [png/jpg only]</span></label>
+                                    <div class="input-group col-sm-12">     
+                                        <div class="custom-file">
+                                            <input type="file" class="custom-file-input" id="customFile" name="addressDocument" 
+                                            (change)="uploadAddressDocument($event)">
+                                            <label class="custom-file-label" for="customFile">{{addressDocumentName}}</label>
+                                        </div>
+                                        <button class="btn btn-primary btn-md" type="button"
+                                        [disabled]="disableAddressDocumentBtn" (click)="submitAddress()">Upload</button>
+                                </div> 
+                        </div>
+
+                        <div class="form-row mb-3">
+                            <label class="form-control-label">VoterId/Pancard<span> [png/jpg only]</span></label>
+                            <div class="input-group col-sm-12">
+                                <div class="custom-file">
+                                    <input type="file" class="custom-file-input" id="customFile" name="addressDocument" 
+                                    (change)="uploadVoterDocument($event)">
+                                    <label class="custom-file-label" for="customFile">{{voterDocumentName}}</label>
+                                </div>
+                                <button class="btn btn-primary btn-md" type="button" 
+                                [disabled]="disableVoterDocumentBtn" (click)="submitVoterDoc()">Upload</button>  
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <small class="col-lg-12" style="color: red; font-weight: bold">Please upload one document at a time</small>
+                        </div>
+        
+                    </form>
+                </div>
+                <div id="tab3" class="tab-slider--body" *ngSwitchCase="'tab3'">
+                    <form>
+                        <div class="form-row mb-3">
+                            <label class="form-control-label">Family Photo<span> [png/jpg only]</span></label>
+                            <div class="input-group col-sm-12">
+                                <div class="custom-file">
+                                    <input type="file" class="custom-file-input" id="customFile" name="familyPhoto" 
+                                    (change)="uploadFamilyPhotoDoc($event)">
+                                    <label class="custom-file-label" for="file">{{familyPhotoName}}</label>    
+                                </div>
+                                <button class="btn btn-primary btn-md" type="button" 
+                                [disabled]="disableFamilyDocumentBtn" (click)="submitFamilyPhoto()">Upload</button>
+                            </div>
+                        </div>
+                        <div class="form-row mb-3">
+                            <label class="form-control-label">Driving License<span> [png/jpg only]</span></label>
+                            <div class="input-group col-sm-12">
+                                <div class="custom-file">
+                                    <input type="file" class="custom-file-input" id="customFile" name="drivingLicense" 
+                                    (change)="uploadDrivingLicenseDoc($event)">
+                                    <label class="custom-file-label" for="customFile">{{drivingLicenseName}}</label>                
+                                </div>
+                                <button class="btn btn-primary btn-md" type="button" 
+                                [disabled]="disableDLDocumentBtn" (click)="submitDrivingLicense()">Upload</button>
+                                
+                            </div>
+                        </div>
+                        <div class="form-row mb-3">
+                            <label class="form-control-label">Joining Letter<span> [png/jpg only]</span></label>
+                            <div class="input-group col-sm-12">
+                                <div class="custom-file">
+                                    <input type="file" class="custom-file-input" id="customFile" name="joiningLetter" 
+                                    (change)="uploadJoiningLetterDoc($event)">
+                                    <label class="custom-file-label" for="customFile">{{joiningLetterName}}</label>
+                                </div>
+                                <button class="btn btn-primary btn-md" type="button"
+                                 [disabled]="disableJoiningLetterBtn" (click)="submitJoiningLetter()">Upload</button>
+                                
+                            </div>
+                        </div>
+
+                        <div class="form-row mb-3">
+                            <label class="form-control-label">Bank Passbook<span> [png/jpg only]</span></label>
+                            <div class="input-group col-sm-12">
+                                <div class="custom-file">
+                                    <input type="file" class="custom-file-input" id="customFile" name="bankPassbook" 
+                                    (change)="uploadBankPassbookDoc($event)">
+                                    <label class="custom-file-label" for="customFile">{{bankPassbookName}}</label>
+                                </div>
+                                <button class="btn btn-primary btn-md" type="button" 
+                                [disabled]="disablePassbookBtn" (click)="submitBankPassbook()">Upload</button>
+                                
+                            </div>
+                        
+                        </div>
+                        <div class="form-row mb-3">
+                            <label class="form-control-label">Education Document<span> [pdf only]</span></label>
+                            <div class="input-group col-sm-12">
+                                <div class="custom-file">
+                                    <input type="file" class="custom-file-input" id="customFile" name="educationDocument" 
+                                    (change)="uploadEducationDoc($event)">
+                                    <label class="custom-file-label" for="customFile">{{educationDocName}}</label>  
+                                </div>
+                                <button class="btn btn-primary btn-md"type="button"
+                                [disabled]="disableEducationBtn" (click)="submitEducationDoc()">Upload</button>
+                            </div>
+                        </div>
+                        <div class="form-row mb-3">
+                            <label class="form-control-label">Releaving Letter<span> [pdf only]</span></label>
+                            <div class="input-group col-sm-12">
+                                <div class="custom-file">
+                                    <input type="file" class="custom-file-input" id="customFile" name="releavingLetter" 
+                                    (change)="uploadReleavingLetter($event)">
+                                    <label class="custom-file-label" for="customFile">{{releavingLetterName}}</label>
+                                </div>
+                                <button class="btn btn-primary btn-md" type="button" 
+                                [disabled]="disableReleavingLetterBtn" (click)="submitReleavingLetter()">Upload</button>
+                                
+                            </div>
+                    
+                        </div>
+                        <div class="form-row mb-3">
+                            <label class="form-control-label">Previous Salary Slips<span> [pdf only]</span></label>
+                            <div class="input-group col-lg-12">
+                                <div class="custom-file">
+                                    <input type="file" class="custom-file-input" id="customFile" name="previousSalarySlips" 
+                                    (change)="uploadpreviousSalarySlips($event)">
+                                    <label class="custom-file-label" for="customFile">{{previousSalarySlipsName}}</label>
+                                </div>
+                                <button class="btn btn-primary btn-md" type="button" [disabled]="disablepreviousSalarySlipsBtn"
+                                (click)="submitpreviousSalarySlips()">Upload</button>
+                            </div>
+                            
+                        </div>
+                        <div class="row">
+                            <small class="col-lg-12" style="color: red; font-weight: bold">Please upload one document at a time</small>
+                        </div>
+        
+                    </form>
+                </div>
+            </div>
+        </div>
+      </div>
+    </div>
+</div>
+
+<!-- show User modal -->
+ <div class="modal fade" id="showUserModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header">   
+          <h5 class="modal-title" id="exampleModalLabel">User Details</h5>    
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close" #closeeditUserBtn>
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body scrollable-modal">   
+            <div class="card p-3 mb-2">
+                <div class="card-body">
+                <div class="d-flex justify-content-between">
+                <div class="d-flex flex-row align-items-center">
+                    <div class="icon"> 
+                        <i class="bx bxl-mailchimp"></i> </div>
+                            <div class="ms-2 c-details">
+                                 <div class="row d-flex">
+                                    <div class="card-title col-lg-6">Name :</div>
+                                    <div class="col-lg-6">{{userDetailsObj.fullName}}</div>
+
+                                    <div class="card-title col-lg-6">Email :</div>
+                                    <div class="col-lg-6">{{userDetailsObj.email}}</div>
+
+                                    <div class="card-title col-lg-6">Contact :</div>
+                                    <div class="col-lg-6">{{userDetailsObj.mobileNo}}</div>
+
+                                    <div class="card-title col-lg-6">DOB :</div>
+                                    <div class="col-lg-6">{{userDetailsObj.dateOfBirth | date : "dd-MM-YYYY"}}</div>
+
+                                    <div class="card-title col-lg-6">Family :</div>
+                                    <div class="col-lg-6">{{userDetailsObj.familyDetails}}</div>
+
+                                    <div class="card-title col-lg-6">Address :</div>
+                                    <div class="col-lg-6">{{userDetailsObj.address}}</div>
+
+                                    <div class="card-title col-lg-6">City :</div>
+                                    <div class="col-lg-6">{{userDetailsObj.cityName}}</div>
+  
+                                 </div>
+                            </div>
+                        </div>  
+                        </div>
+                        </div>   
+            </div>
+            <!-- Page body -->
+            <div class="page-body">
+                <div class="container-xl">
+                <div class="row row-cards">
+                    <div class="col-12">
+                        <div class="card">
+                        <div class="card-header">
+                            <div class="col-lg-10 mb-3 mt-2">
+                                <h3 class="card-title">User Documents</h3>
+                            </div>
+                        </div>
+                        <div class="table-responsive">
+                        <table class="table card-table table-vcenter text-nowrap datatable">
+                        
+                            <tr style="background-color:#1d4ed8;">
+                                <th scope="col" style="color: #fff; font-family: sans-serif;">S No.</th>
+                                <th scope="col" style="color: #fff; font-family: sans-serif;">Name</th>
+                                <th scope="col" style="color: #fff; font-family: sans-serif;">Details</th>
+                            </tr>
+                            
+                            <tbody *ngFor="let item of userDocuments| paginate: { itemsPerPage: 5, currentPage: page } ; let i = index ">
+                            <tr>
+                                <td>{{5*(page-1)+i+1}}</td>
+                                <td>{{item.documentName}}</td> 
+                                <td (click)="showUserDocuments(item)" data-toggle="modal" data-target="#showUserDocModal" *ngIf="item.fileType == '.png' || item.fileType == '.jpg' || item.fileType == '.jpeg'">
+                                    <button class="btn btn-primary">View Image</button>
+                                
+                                </td>
+                                <td *ngIf="item.fileType == '.pdf'">
+                                    <a [href]="item.url" target="_blank">
+                                        <button class="btn btn-primary">Open PDF</button></a>
+                                </td>     
+                            </tr>        
+                            </tbody>
+                            
+                        </table>
+                        <div class="card-footer d-flex align-items-center" style="background-color: #fff;">
+                            <div class="col-lg-12 d-flex justify-content-end pagination-custom pt-2">
+                                <pagination-controls previousLabel="Prev"nextLabel="Next" (pageChange)="page = $event" [responsive]="true"></pagination-controls>
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+                </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+            
+
+<div class="modal fade" id="showUserDocModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">User Document</h5>
+         
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close" #closeUserDocBtn>
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+                  <div class="g-4 align-self-center text-center" *ngIf="!documentTypePdf && documentTypeImage">
+                        <p>{{userDocImage.documentName}}</p>
+                        <img [src]="fileUrl" alt="Documents" >
+                  </div>
+        </div>
+      </div>
+    </div>
+</div>
+
+
+
+<!-- <div class="modal fade" id="showSampleModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header">   
+          <h5 class="modal-title" id="exampleModalLabel">Sample</h5>    
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+
+        <div class="modal-body scrollable-modal">
+                 <p>{{src}}</p>
+                <pdf-viewer [src]="src" [rotation]="0" [original-size]="false"
+                  [show-all]="true"  [fit-to-page]="false" [zoom]="1" [zoom-scale]="'page-width'"
+                  [stick-to-page]="false" [render-text]="false" [external-link-target]="'blank'"
+                  [autoresize]="true" [show-borders]="true" style="width: 100%; height: calc(100vh - 100px);">
+                </pdf-viewer>
+               
+        </div> 
+      </div>
+    </div>
+</div> -->
+

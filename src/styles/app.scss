@@ -1,0 +1,501 @@
+/* You can add global styles to this file, and also import other style files */
+@import 'bootstrap/scss/bootstrap';
+@import 'spinner';
+@import 'utils';
+@import 'rtl';
+@import 'responsive';
+
+@media print {
+  .breadcrumb {
+    display: none !important;
+  }
+}
+
+
+// .btn {
+//   background-color: darkgoldenrod !important;
+//   border-color: darkgoldenrod !important;
+// }
+
+// .multiselect-dropdown .dropdown-btn .selected-item {
+//   border: 1px solid darkgoldenrod !important;
+//   background: darkgoldenrod !important;
+
+// }
+
+.logo .logo-brand {
+  height: 4.375rem;
+  text-decoration: none;
+  font-size: 1rem;
+  font-weight: 800;
+  padding: 1.5rem 1rem;
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 0.05rem;
+  z-index: 1;
+}
+
+.logo .logo-brand .logo-brand-icon i {
+  font-size: 2rem;
+}
+
+.logo .logo-brand .logo-brand-icon img {
+  height: 50px;
+}
+
+.logo .logo-brand .logo-brand-text {
+  color: #bb1e43;
+  display: block;
+}
+
+.logo .logo-brand .logo-brand-text span {
+  color: #161515;
+}
+
+.pi {
+  font-size: 30px;
+}
+
+.text-highlight {
+  text-decoration: underline;
+  color: #07409d;
+  cursor: pointer;
+}
+
+.dropdown-list {
+  position: relative !important;
+}
+
+.text-disabled {
+  background-color: lightgrey;
+  color: grey;
+}
+
+.text-error {
+  color: red;
+  cursor: pointer;
+}
+
+.text-emerald-500, .status-green {
+  color: green;
+}
+
+.text-rose-500, .status-red {
+  color: red;
+}
+
+.custom-toolbar {
+  height: 50px;
+  background-color: #c0c0c0a6;
+  border-radius: 5px;
+  color: black;
+
+  display: flex;
+  align-items: center;
+  padding: 0 10px;
+}
+
+.table-header {
+  font-size: 12px !important;
+  /* Adjust the font size as needed */
+}
+
+.table-cell {
+  font-size: 12px !important;
+  /* Adjust the font size as needed */
+}
+
+.card-text {
+  font-size: 13px !important;
+}
+
+.navbar-brand-custom {
+  text-decoration: none;
+  padding: 10px 10px;
+  letter-spacing: 3px;
+  margin-left: 30px;
+  font-weight: bold;
+  font-size: 25px;
+  color: #fff;
+}
+
+@media (min-width: 992px){
+  .menu-logout{
+    position: absolute;
+    left: -83px;
+  }
+  }
+
+.file-format{
+  color:black; 
+  font-weight: bold;  
+  font-size: small;
+}
+
+.number-font{
+  font-family:Arial, Helvetica, sans-serif;
+  font-size: medium;
+}
+
+.dropdown-item {
+  position: relative;
+}
+
+.dropdown-item:after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background-color: #d6d2d2;
+}
+
+.price-alert{
+  color:red;
+  font-weight: bold;
+}
+
+.product-view{
+  height: 200px;
+  padding: 20px; 
+  padding-top: 40px;
+}
+
+.navbar-brand-image{
+  width: 100%;
+  height: 15vh !important;
+}
+
+
+
+.ngx-pagination .current {
+  padding: 0.1875rem 0.625rem;
+  background: #1d4ed8!important;
+}
+
+.info-text{
+ color: #1d4ed8;   
+ font-weight: bold;
+}
+
+.btn-primary {
+  background-color: #1d4ed8 !important;
+  text-transform: capitalize !important;
+  font-size: 15px;
+}
+
+.btn-success{
+  background-color: green !important;
+  text-transform: capitalize !important;
+  font-size: 15px;
+}
+
+.text-red,.mandatory-text{
+  color: red !important;
+}
+
+.text-green{
+  color:green !important;
+  font-weight: bold !important;
+}
+
+.data-green{
+  color:green !important;
+  font-weight: bold !important;
+}
+.data-red{
+  color:red !important;
+  font-weight: bold !important;
+}
+.data-blue{
+  color:blue !important;
+  font-weight: bold !important;
+}
+
+.dropdown-menu-column {
+  min-width: 13rem !important;
+}
+
+.card-title {
+  margin: 0 0 0rem !important;
+}
+
+.logo-image{
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+}
+
+
+.nav-tabs>.nav-item>.nav-link {
+  color: #070707;
+  background-color: transparent;
+  border: 1px solid transparent;
+  border-radius: 3px;
+  font-size: 15px;
+  
+}
+
+.nav-tabs>.nav-item>.nav-link:hover {
+  background-color: transparent;
+}
+
+.nav-tabs>.nav-item>.nav-link.active {
+  background-color: #1d4ed8;
+  color: #FFFFFF;
+}
+
+
+
+.nav-tabs {
+  border: 0;
+}
+
+.tab-slider--nav {
+  width: 100%;
+  float: left;
+  margin-bottom: 20px;
+}
+
+.tab-slider--tabs {
+  display: block;
+  float: left;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  position: relative;
+  border-radius: 5px;
+  overflow: hidden;
+  background: #fff;
+  height: 35px;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+}
+.tab-slider--tabs:after {
+  content: "";
+  width: 50%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  -webkit-transition: all 250ms ease-in-out;
+  transition: all 250ms ease-in-out;
+  border-radius: 35px;
+}
+.tab-slider--tabs.slide:after {
+  left: 50%;
+}
+
+.tab-slider--trigger {
+  font-size: 15px;
+  line-height: 1;
+  font-weight: bold;
+  color: #1d4ed8;
+  text-align: center;
+  padding: 11px 20px;
+  position: relative;
+  z-index: 2;
+  cursor: pointer;
+  display: inline-block;
+  -webkit-transition: color 250ms ease-in-out;
+  transition: color 250ms ease-in-out;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+}
+
+.tab-slider--trigger.active {
+  color: #fff;
+  background: #1d4ed8;
+}
+
+.tab-slider--body {
+  margin-bottom: 20px;
+}
+
+
+.btn-primary:hover,.btn-primary:active, .btn-primary:focus  {
+  background-color: #1d4ed8 !important;
+}
+
+
+.fa{
+  cursor: pointer;
+}
+
+  .label-red{
+     color:red;
+     font-size: 20px; 
+  }
+
+  .text-black{
+      text-transform: capitalize;
+      font-size: 18px!important;
+      font-weight: 500!important;
+      font-family: Montserrat,Helvetica Neue,Arial,sans-serif;
+  }
+
+  .p-dropdown{
+      width: 100%
+  }
+
+  .p-inputtext{
+      padding: 0.38rem 0.75rem !important;
+  }
+
+  .invalid-feedback {
+      font-size: 90% !important;
+  }
+
+  .document-body{
+      height:80vh;
+      overflow-y: scroll;
+    }
+
+    /* You can add global styles to this file, and also import other style files */
+.bg-light{
+  background: #1d4ed8 !important;
+  color:#000;
+}
+
+.btn-primary{
+  background-color: #1d4ed8 !important;
+  border-color:  #1d4ed8 !important;
+}
+
+.thead-secondary{
+  background-color: #1d4ed8 !important;
+}
+
+.prduct-table{
+  background-color:white
+}
+
+.table-card{
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+  border-radius: 5px 5px;
+  background-color: white;
+}
+
+table tbody tr td{
+  width: 20%;
+  text-align: center;
+}
+
+table thead tr th{
+  width: 20%;
+  text-align: center;
+}
+
+.pagination-custom{
+  border-top: 1px solid #fff;
+}
+
+.dropdown-item:hover {
+  color: #fff;
+  text-decoration: none;
+  background-color: #1d4ed8;
+}
+
+
+input[type=radio] {
+  margin-top: 10px !important;
+  width: 17px;
+  height: 17px;
+}
+
+.modal-footer {
+  border-top: 0px !important;
+}
+
+.prime-table{
+  width: 100% !important;
+}
+
+.p-datatable .p-datatable-thead > tr > th {
+  /* text-align: center !important; */
+  padding: 0.5rem 1rem;
+  background-color: #1d4ed8;
+}
+
+.prime-edit-input{
+  width: 130px;
+}
+
+.mt-button{
+  margin-top: 4% !important;
+}
+
+.scrollable-modal{
+  overflow: scroll;
+  height: 500px;
+}
+
+table tbody tr td {
+  width: 20%;
+  text-align: left !important;
+}
+
+.navbar-brand-image{
+  width:160px !important;
+  height: 40px !important;
+}
+
+.search-dropdown-menu{
+  left: 8px !important;
+}
+
+.search-dropdown-item{
+width:290px !important;
+}
+
+
+
+/* media */
+/* Extra small devices (phones, 600px and down) */
+@media only screen and (max-width: 600px) {
+  .prduct-table {
+      background-color: white;
+      display: block;
+      width: 100%;
+      overflow: scroll;
+      padding-bottom: 10px;
+  }
+  .mt-button{
+      margin-top: 1% !important;
+  }
+  
+}
+
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (min-width: 600px) and (max-width: 767px) {
+  
+}
+
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (min-width: 768px)and (max-width: 991px) {
+  .mt-button{
+      margin-top: 1% !important;
+      margin-bottom: 1% !important;
+  }
+  
+} 
+
+/* Large devices (laptops/desktops, 992px and up) */
+@media only screen and (min-width: 992px) and (max-width: 1199px) {
+  
+ 
+} 
+
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+@media only screen and (min-width: 1200px){
+  
+  
+}
+
+
+

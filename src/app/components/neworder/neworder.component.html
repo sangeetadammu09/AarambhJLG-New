@@ -1,0 +1,265 @@
+<!-- Page body -->
+<div class="page-body">
+    <div class="container-xl">
+      <div class="row row-cards">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="row card-header">
+                    <div class="container d-block">
+                    <div class="mt-3 mb-3 row">
+                        <div class="col-lg-10  col-sm-12 mb-3 mt-2">
+                            <h3 class="card-title" >Place New Order</h3>
+                            <button id="openModalButton" data-toggle="modal" data-target="#memberValidityModal" #openModal
+                    [hidden]="true">Click me</button>
+                        </div>
+                        <div class="col-lg-2 col-sm-12 mb-3 mt-2">
+                            <button class="btn btn-primary btn-md"
+                            (click)="showViewCartModal()" [disabled]="this.selectedCartId == null ? true : false">View Cart</button>
+                        </div>
+                        
+                    </div>
+                    <div class="mt-3 mb-3 row">
+                        <div class="form-row">
+                          <div class="form-group col-md-4 col-sm-12">
+                            <label for="searchCenter">Select Branch<span style="color: crimson; font-weight: bold; font-size: large;"> *</span></label>
+                            <select class="custom-select" id="searchBranch" [(ngModel)]="searchBranch">
+                              <option value="" [selected]="''">Choose Branch..</option>
+                              <option *ngFor="let item of branchDropdownList" [ngValue]="item.branchId">
+                                  {{item.branchName}}</option>
+                              </select>
+                          </div> 
+
+                            <div class="form-group col-md-4 col-sm-12">
+                              <label for="searchCenter">Select Center<span style="color: crimson; font-weight: bold; font-size: large;"> *</span></label>
+                              <select class="custom-select" id="searchCenter" [(ngModel)]="searchCenter" (change)="getCenterVal(searchCenter)">
+                                <option value="" [selected]="''">Choose Center..</option>
+                                <option *ngFor="let item of centerDropdownList" [ngValue]="item.centerId">
+                                    {{item.centerName}}</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group col-md-4 col-sm-12">
+                              <label for="searchMember">Select Member<span style="color: crimson; font-weight: bold; font-size: large;"> *</span></label>
+                              <select class="custom-select" id="searchMember" [(ngModel)]="searchMember" (change)="validateAndCreateCart(searchMember)">
+                                <option value="" [selected]="''">Choose Member..</option>
+                                <option *ngFor="let item of memberDropdownList" [ngValue]="item.memberId">
+                                    {{item.fullName}}
+                                </option>
+                              </select>
+                            </div>
+                          </div>
+                          <div class="row">
+                          <div class="form-row">
+                          <div class="form-group col-md-10 col-sm-12">       
+                            <label for="inputAddress">Search Product</label>
+                            <div class="dropdown">
+                              <div  data-bs-toggle="dropdown">
+                                <div class="input-icon">
+                                <input type="text" class="form-control" [(ngModel)]="searchProduct" 
+                                (input)="getSearchedProducts(searchProduct)" placeholder="Search Product ...">
+                                <span class="input-icon-addon">
+                                  <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0"></path><path d="M21 21l-6 -6"></path></svg>
+                                </span>
+                              </div>
+                              </div>
+                             
+                            <div [ngClass]="productList.length>0 ? 'dropdown dropdown-menu search-dropdown-menu' :'dropdown-menu search-dropdown-menu'">
+                              <div *ngIf="productList.length > 0">
+                                <a class="dropdown-item search-dropdown-item" *ngFor="let item of productList"
+                                 (click)="listSearchedProduct(item)" >
+                                  {{item.productName}}
+                                </a>
+                              </div>
+                               <div *ngIf="productList.length == 0">
+                                <a  class="dropdown-item search-dropdown-item">No Product Found</a>
+                               </div>
+                              
+                            </div>
+                            <!-- [ngStyle]="productList.length == 0 ? 'display: none' : 'display: visible'" -->
+                          
+                            </div> 
+                          </div>
+                          <div class="form-group col-md-2 mt-order">
+                            <button class="btn btn-primary" (click)="clearText()">Clear Text</button>
+                          </div>
+                          </div>
+                        </div>
+                    </div>
+                    </div>
+                  </div>
+                <div class="container-xl mt-3 mb-3" *ngIf="pageLoaded">
+                <div class="row row-deck row-cards" *ngIf="randomProductList.length != 0">
+                  <div class="col-sm-6 col-lg-3" *ngFor="let item of randomProductList| paginate: { itemsPerPage: 12, currentPage: page};
+                  let i = index">
+                  <div class="card p-2 h-100">
+                    <img class="card-img-top product-view"  [src]="item.productPhoto" alt="Product Image" 
+                    data-toggle="modal" data-target="#productModal"
+                    (click)="showProductModal(item)">
+                    <div class="card-body">
+                      <h5 class="card-title" style="height: 40px" data-toggle="modal" data-target="#productModal"
+                      (click)="showProductModal(item)">{{item.productName}}</h5>
+                      <!-- <p class="card-text">Regional Name: {{item.regionalName}}</p> -->
+                      <p class="card-text">MRP: {{item.mrp | currency: 'INR'}}</p>
+                      <p class="card-text">Sale Price: {{item.jlgSalePrice | currency: 'INR'}}</p>
+                      <p class="card-text price-alert" *ngIf="item.priceUpdateMsg!=null">Alert : {{item.priceUpdateMsg}}</p>
+                    </div>
+
+                  </div>
+                  </div>
+                </div> 
+                <div class="card-footer d-flex align-items-center" style="background-color: #fff;">
+                  <div class="col-lg-12 d-flex justify-content-end pagination-custom pt-2" *ngIf="randomProductList.length != 0">
+                      <pagination-controls previousLabel="Prev"nextLabel="Next" [responsive]="true"
+                      (pageChange)="page = $event"></pagination-controls>
+                  </div>
+                </div>  
+                </div>
+
+                <div class="table-responsive mt-3" *ngIf="!pageLoaded">
+                  <div class="d-flex justify-content-center">
+                    <div class="spinner-border" role="status">
+                      <span class="sr-only">Loading...</span>
+                    </div>
+                          &nbsp;
+                      <h3 class="text-center mr-2">Data loading. Please Hold on!</h3>
+                  </div>
+              </div>
+
+        </div>
+    </div>
+</div>
+</div>
+</div>
+
+<div class="modal fade" id="productModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel" *ngIf="searchProductItem">{{searchProductItem.productName}}</h5>
+       
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" #closeproductModalBtn>
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body scrollable-modal" *ngIf="searchProductItem">
+        <div class="card p-2">
+          <img  [src]="searchProductItem.productPhoto" alt="cart image" class="logo-image product-view">
+          <div class="card-body">
+            <h5 class="card-title">{{searchProductItem.productName}}</h5>
+            <!-- <p class="card-text">Regional Name: {{searchProductItem.regionalName}}</p> -->
+            <p class="card-text">MRP: {{searchProductItem.mrp | currency: 'INR'}}</p>
+            <p class="card-text">Sale Price: {{searchProductItem.jlgSalePrice | currency: 'INR'}}</p>
+            <p>{{searchProductItem.qty}}</p>
+          </div>
+          <div class="mb-3">
+            <input type="text" class="form-control" id="quantity"  [(ngModel)]="productObj.prodQuantityInput" 
+            placeholder="Enter Quantity" #prodQuantityInput=ngModel pattern="^(0|[1-9][0-9]*)$" [value]="searchProductItem.qty">
+            <div *ngIf="prodQuantityInput.touched">
+              <p class="text-red" *ngIf="prodQuantityInput.errors?.pattern">Only Numbers are required</p>
+            </div>
+            </div>
+           <button (click)="addToCart(prodQuantityInput,searchProductItem)" class="btn btn-primary w-100">
+            {{cartText}}</button>
+            <p class="text-red mt-3 text-bold" *ngIf="salesPriceZero">Sales cannot be less than zero. Please add Sales Price.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- view cart -->
+<div class="modal fade" id="viewCartModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog modal-xl" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">View Cart</h5>
+       
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" #closeViewCartModalBtn>
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body scrollable-modal">
+        <div class="card p-3 mb-2">
+          <div class="card-body">
+          <div class="d-flex justify-content-between">
+          <div class="d-flex flex-row align-items-center">
+              <div class="icon"> 
+                  <i class="bx bxl-mailchimp"></i> 
+                </div>
+                      <div class="ms-2 c-details">
+                           <div class="row d-flex">
+                              <div class="card-title col-lg-6">Member Name :</div>
+                              <div class="col-lg-6">{{cartDetailsObj.fullName}}</div>
+                              <div class="card-title col-lg-6">DOB :</div>
+                              <div class="col-lg-6">{{cartDetailsObj.cartDate | date : "dd-MM-YYYY"}}</div>
+                           </div>
+                      </div>
+              </div>  
+              </div>
+          </div>   
+      </div>
+      <!-- Page body -->
+      <div class="page-body">
+          <div class="container-xl">
+          <div class="row row-cards">
+              <div class="col-12">
+                
+                  
+                <div class="container mt-3 mb-3" *ngIf="cartList.length != 0">
+                  <div class="ribbon ribbon-top ribbon-bookmark bg-green">
+                    <!-- Download SVG icon from http://tabler-icons.io/i/star -->
+                  <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-filled" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M12 17.75l-6.172 3.245l1.179 -6.873l-5 -4.867l6.9 -1l3.086 -6.253l3.086 6.253l6.9 1l-5 4.867l1.179 6.873z"></path></svg>
+                </div>
+                  <div class="row">
+                    <div class="col col-3 mb-3" *ngFor="let item of cartList| paginate: { itemsPerPage: 10, currentPage: page};
+                    let i = index">
+                    <div class="card p-2 h-100">
+                      <img class="card-img-top"  [src]="item.itemUrl" alt="cart image" height="250px">
+                      <div class="card-body">
+                        <h5 class="card-title" style="height: 40px">Name: {{item.itemName}}</h5>
+                        <p class="card-text">MRP: {{item.mrp | currency: 'INR'}}</p>
+                        <p class="card-text">Sale Price: {{item.jlgSalePrice | currency: 'INR'}}</p>
+                        <p class="card-text">Sub Total: {{item.subTotal | currency: 'INR'}}</p>
+                      </div>
+  
+                    </div>
+                    </div>
+                  </div>   
+                  </div>
+                  <div class=" d-flex align-items-center" style="background-color: #fff;">
+                    <div class="col-lg-12 d-flex justify-content-end pagination-custom pt-2">
+                        <pagination-controls previousLabel="Prev"nextLabel="Next" (pageChange)="page = $event" [responsive]="true"></pagination-controls>
+                    </div>
+                </div>
+
+              
+          </div>
+          </div>
+          </div>
+      </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="memberValidityModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Alert</h5>
+       
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" #closeMemberValidityBtn>
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+           <h4>{{notEligibleTxt}}</h4>
+           <div class="modal-footer">
+              <button type="submit" class="btn btn-primary" (click)="closeMemberValidityModal()">Okay</button>
+            </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+

@@ -1,0 +1,510 @@
+
+<!-- Page body -->
+<div class="page-body">
+    <div class="container-xl">
+      <div class="row row-cards">
+        <div class="col-12">
+            <div class="card">
+              <div class="card-header">
+                <div class="col-lg-10 mb-3 mt-2">
+                    <h3 class="card-title">List of Products</h3>
+                </div>
+                
+                <div class="col-lg-2 mb-3 mt-2"  *ngIf="showAddBtn">
+                    <button class="btn btn-primary btn-pill w-100" data-toggle="modal" data-target="#addProductModal"
+                (click)="showaddProductModal()">Add Product</button>
+                </div>
+              </div>
+
+         <div class="table-responsive" *ngIf="pageLoaded">
+            <table class="table card-table table-vcenter text-nowrap datatable" *ngIf="productList.length != 0">
+                
+                  <tr style="background-color:#1d4ed8;">
+                    <th scope="col" style="color: #fff;">S No.</th>
+                    <th scope="col" style="color: #fff;">Name</th>
+                    <th scope="col" style="color: #fff;">HSN Code</th>
+                    <th scope="col" style="color: #fff;">Category</th>
+                    <th scope="col" style="color: #fff;">Unit</th>
+                    <th scope="col" style="color: #fff;">SalesTax</th>
+                    <th scope="col" style="color: #fff;">Bar Code</th>
+                    <th scope="col" style="color: #fff;">Description</th>        
+                    <th scope="col" style="color: #fff;">Edit</th>
+                    <th scope="col" style="color: #fff;"  *ngIf="showAddBtn">Delete</th>
+                  </tr>
+                
+             
+                <tbody *ngFor="let item of productList| paginate: { itemsPerPage: pageSize, currentPage: page, totalItems: total } ; let i = index ">
+                  <tr>
+                    <td>{{pageSize*(page-1)+i+1}}</td>
+                    <td>{{item.productName}}</td> 
+                    <td>{{item.hsnCode}}</td>
+                    <td>{{item.categoryName}}</td>
+                    <td>{{item.unitName}}</td>
+                    <td>{{item.saleTaxSlot}}</td>
+                    <td>{{item.barcode}}</td>
+                    <td>{{item.description}}</td>
+                   
+                    <td (click)="showeditProductModal(item)" data-toggle="modal" data-target="#editProductModal">
+                        <svg enable-background="new 0 0 19 19" height="19px" id="Layer_1" version="1.1" viewBox="0 0 19 19" width="19px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                            <g><path d="M8.44,7.25C8.348,7.342,8.277,7.447,8.215,7.557L8.174,7.516L8.149,7.69   C8.049,7.925,8.014,8.183,8.042,8.442l-0.399,2.796l2.797-0.399c0.259,0.028,0.517-0.007,0.752-0.107l0.174-0.024l-0.041-0.041   c0.109-0.062,0.215-0.133,0.307-0.225l5.053-5.053l-3.191-3.191L8.44,7.25z" fill="#231F20"/>
+                            <path d="M18.183,1.568l-0.87-0.87c-0.641-0.641-1.637-0.684-2.225-0.097l-0.797,0.797l3.191,3.191l0.797-0.798   C18.867,3.205,18.824,2.209,18.183,1.568z" fill="#231F20"/><path d="M15,9.696V17H2V2h8.953l1.523-1.42c0.162-0.161,0.353-0.221,0.555-0.293   c0.043-0.119,0.104-0.18,0.176-0.287H0v19h17V7.928L15,9.696z" fill="#231F20"/>
+                        </g></svg>
+                    </td>     
+                    <td  (click)="showdeleteProductModal(item)" data-toggle="modal"  data-target="#deleteProductModal"  *ngIf="showAddBtn">
+                        <svg enable-background="new 0 0 19 19" height="19px" id="Layer_1" version="1.1" viewBox="0 0 26 29" width="26px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                            <g><path d="M1.035,9l3.49,17.478C4.525,27.854,5.643,29,7.019,29H13h5.981c1.376,0,2.493-1.146,2.493-2.522L24.965,9   H13H1.035z" fill="#231F20"/>
+                            <path d="M23.524,3H21V2.824C21,1.264,19.736,0,18.176,0H7.824C6.264,0,5,1.264,5,2.824V3H2.476   C0.946,3,0,3.939,0,5.468V7h7.824h10.352H26V5.468C26,3.939,25.053,3,23.524,3z" fill="#231F20"/>
+                        </g></svg>
+                    </td> 
+                  </tr>        
+                </tbody>
+                
+            </table>
+            <div class="card-footer d-flex align-items-center" style="background-color: #fff;">
+                <div class="col-lg-12 d-flex justify-content-end pagination-custom pt-2">
+                    <pagination-controls previousLabel="Prev"nextLabel="Next" [responsive]="true"
+                     (pageChange)="handlePageChange($event)"></pagination-controls>
+                </div>
+            </div>
+            <div class="row card mb-3" *ngIf="productList.length == 0">
+              <p class="text-center">No Product found</p>
+            </div>
+
+        </div>
+        <div class="container-xl mt-3" *ngIf="!pageLoaded">
+            <div class="d-flex justify-content-center">
+              <div class="spinner-border" role="status">
+                <span class="sr-only">Loading...</span>
+              </div>
+                    &nbsp;
+                <h3 class="text-center mr-2">Data loading. Please Hold on!</h3>
+            </div>
+          </div>
+
+       
+      </div>
+    </div>
+</div>
+</div>
+</div>
+            
+
+
+<!-- add Product modal -->
+<div class="modal fade" id="addProductModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">{{addProductTitle}}</h5>       
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close" #closeaddProductBtn>
+            <span aria-hidden="true">&times;</span>
+          </button>    
+        </div>
+        <div class="modal-body">
+            
+            <div class="tab-slider--nav">
+                <ul class="tab-slider--tabs">
+                  <li class="tab-slider--trigger" [class.active]="viewMode == 'tab1'" rel="tab1" (click)="viewMode ='tab1';addProdTab()">Add Product</li>
+                  <li class="tab-slider--trigger" [class.active]="viewMode == 'tab2'" rel="tab2" (click)="viewMode ='tab2';uploadProdImages()">Upload Product Images</li>
+                </ul>
+            </div>
+            <div class="tab-slider--container" [ngSwitch]="viewMode">
+                <div id="tab1" class="tab-slider--body" *ngSwitchCase="'tab1'">
+                    <form [formGroup]="addProductForm" (ngSubmit)="submitNewProduct()">
+                        <div class="row">
+                            <div class="form-group col-lg-6">
+                                <label class="form-control-label">Name</label>
+                                <input type="text" class="form-control" formControlName="productEngName" name="productEngName"  
+                                [ngClass]="{'is-invalid':(submitted && f['productEngName'].errors) ||(f['productEngName'].errors && f['productEngName'].touched) }">
+                                    <div *ngIf="(submitted && f['productEngName'].errors) ||(f['productEngName'].errors && f['productEngName'].touched)" class="invalid-feedback">
+                                        <div *ngIf="f['productEngName'].errors['required']">
+                                            Name is required
+                                        </div>
+                                 </div>
+                            </div>
+                            <div class="form-group col-lg-6">
+                                <label class="form-control-label">Name(Marathi)</label>
+                                <input type="text" class="form-control" formControlName="productName" name="productName"  
+                                [ngClass]="{'is-invalid':(submitted && f['productName'].errors) ||(f['productName'].errors && f['productName'].touched) }">
+                                    <div *ngIf="(submitted && f['productName'].errors) ||(f['productName'].errors && f['productName'].touched)" class="invalid-feedback">
+                                        <div *ngIf="f['productName'].errors['required']">
+                                            Name(Marathi) is required
+                                        </div>
+                                 </div>
+                            </div>
+                            
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-lg-6">
+                                <label class="form-control-label">Category</label>
+                                <select class="custom-select"  formControlName="catId" name="catId" id="catId"
+                                [ngClass]="{'is-invalid':(submitted && f['catId'].errors) ||(f['catId'].errors && f['catId'].touched) }">
+                                <option value="" [selected]="''">Choose...</option>
+                                    <option *ngFor="let item of productCategoryList" [ngValue]="item.categoryId">
+                                        {{item.categoryName }}</option>
+                                </select>
+                                  <div *ngIf="(submitted && f['catId'].errors) ||(f['catId'].errors && f['catId'].touched)" class="invalid-feedback">
+                                        <div *ngIf="f['catId'].errors['required']">
+                                            Category is required
+                                        </div>
+                                 </div>
+                            </div>
+                            <div class="form-group col-lg-6">
+                                <label class="form-control-label">Unit</label>
+                                <select class="custom-select"  formControlName="unitId" name="unitId" id="unitId"
+                                [ngClass]="{'is-invalid':(submitted && f['unitId'].errors) ||(f['unitId'].errors && f['unitId'].touched) }">
+                                <option value="" [selected]="''">Choose..</option>
+                                    <option *ngFor="let item of unitList" [ngValue]="item.unitId">
+                                        {{item.unitName }}</option>
+                                    
+                                  </select>
+                                    <div *ngIf="(submitted && f['unitId'].errors) ||(f['unitId'].errors && f['unitId'].touched)" class="invalid-feedback">
+                                        <div *ngIf="f['unitId'].errors['required']">
+                                            Unit is required
+                                        </div>
+                                 </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="form-group col-lg-6">
+                                <label class="form-control-label">Sales Tax Group</label>
+                                <select class="custom-select"  formControlName="saleTaxId" name="saleTaxId" id="saleTaxId"
+                                [ngClass]="{'is-invalid':(submitted && f['saleTaxId'].errors) ||(f['saleTaxId'].errors && f['saleTaxId'].touched) }">
+                                <option value="" [selected]="''">Choose...</option>
+                                    <option *ngFor="let item of taxSlotList" [ngValue]="item.taxId">
+                                        {{item.taxName }}</option>
+                                </select>
+                                <div *ngIf="(submitted && f['saleTaxId'].errors) ||(f['saleTaxId'].errors && f['saleTaxId'].touched)" class="invalid-feedback">
+                                    <div *ngIf="f['saleTaxId'].errors['required']">
+                                            Sales Tax Group is required
+                                    </div>
+                                 </div>
+                            </div> 
+                            <div class="form-group col-lg-6">
+                                <label class="form-control-label">Brand</label>
+                                <select class="custom-select"  formControlName="brandId" name="brandId" id="brandId"
+                                [ngClass]="{'is-invalid':(submitted && f['brandId'].errors) ||(f['brandId'].errors && f['brandId'].touched) }">
+                                <option value="" [selected]="''">Choose...</option>
+                                    <option *ngFor="let item of productBrandList" [ngValue]="item.brandId">
+                                        {{item.brandName }}</option>
+                                </select>
+                                <div *ngIf="(submitted && f['brandId'].errors) ||(f['brandId'].errors && f['brandId'].touched)" class="invalid-feedback">
+                                    <div *ngIf="f['brandId'].errors['required']">
+                                            Brand is required
+                                    </div>
+                                 </div>
+                            </div>                   
+                            
+                        </div>
+                        
+                        <div class="row">
+                            <div class="form-group col-lg-6">
+                                <label class="form-control-label">HSN Code</label>
+                                <input type="text" class="form-control" formControlName="hsnCode" name="hsnCode"  
+                                [ngClass]="{'is-invalid':(submitted && f['hsnCode'].errors) ||(f['hsnCode'].errors && f['hsnCode'].touched) }">
+                                    <div *ngIf="(submitted && f['hsnCode'].errors) ||(f['hsnCode'].errors && f['hsnCode'].touched)" class="invalid-feedback">
+                                        <div *ngIf="f['hsnCode'].errors['required']">
+                                            HSN Code is required
+                                        </div>
+                                 </div>
+                            </div>
+                            <div class="form-group col-lg-6">
+                                <label class="form-control-label d-flex">Bar Code
+                                <span class="barcode-check">
+                                    <input class="form-check-input" type="checkbox" value="">AutoGenerate
+                                    
+                                </span> 
+                                </label>
+                                
+                                <input type="text" class="form-control" formControlName="barcode" name="barcode"  
+                                [ngClass]="{'is-invalid':(submitted && f['barcode'].errors) ||(f['barcode'].errors && f['barcode'].touched) }">
+                                    <div *ngIf="(submitted && f['barcode'].errors) ||(f['barcode'].errors && f['barcode'].touched)" class="invalid-feedback">
+                                        <div *ngIf="f['barcode'].errors['required']">
+                                            Bar Code is required
+                                        </div>
+                                 </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-lg-12">
+                                <label class="form-control-label">Description</label>
+                                <textarea formControlName="description" name="description"  class="form-control"  id="description" rows="3"
+                                [ngClass]="{'is-invalid':(submitted && f['description'].errors) ||(f['description'].errors && f['description'].touched) }"
+                                ></textarea>
+                                <div *ngIf="(submitted && f['description'].errors) ||(f['description'].errors && f['description'].touched)" class="invalid-feedback">
+                                        <div *ngIf="f['description'].errors['required']">
+                                            Description is required
+                                        </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-primary" [disabled]="isItemAdded">Save</button>
+                        </div>
+                    </form>
+                </div>
+                <div id="tab2" class="tab-slider--body" *ngSwitchCase="'tab2'">
+                    <form>
+                        <div class="row">
+                            <div class="form-group col-lg-8">
+                                <label class="form-control-label">Product One</label>
+                                <div class="custom-file">
+                                    <input type="file" class="custom-file-input" id="customFile" name="prodImages" 
+                                    (change)="uploadProductImageOne($event)">
+                                    <label class="custom-file-label" for="file">{{productOneImageName}}</label>    
+                                </div>
+                                
+                            </div>
+                            <div class="col-lg-4 mt-button">
+                                <button class="btn btn-primary btn-md" type="button" [disabled]="disableProdImageOneBtn" (click)="submitProdImageOne()">Upload</button>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="form-group col-lg-8">
+                                <label class="form-control-label">Product Two</label>
+                                <div class="custom-file">
+                                    <input type="file" class="custom-file-input" id="customFile" name="prodImages" 
+                                    (change)="uploadProductImageTwo($event)">
+                                    <label class="custom-file-label" for="file">{{productTwoImageName}}</label>    
+                                </div>
+                                
+                            </div>
+                            <div class="col-lg-4 mt-button">
+                                <button class="btn btn-primary btn-md" type="button" [disabled]="disableProdImageTwoBtn" (click)="submitProdImageTwo()">Upload</button>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="form-group col-lg-8">
+                                <label class="form-control-label">Product Three</label>
+                                <div class="custom-file">
+                                    <input type="file" class="custom-file-input" id="customFile" name="prodImages" 
+                                    (change)="uploadProductImageThree($event)">
+                                    <label class="custom-file-label" for="file">{{productThreeImageName}}</label>    
+                                </div>
+                                
+                            </div>
+                            <div class="col-lg-4 mt-button">
+                                <button class="btn btn-primary btn-md" type="button" [disabled]="disableProdImageThreeBtn" (click)="submitProdImageThree()">Upload</button>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="form-group col-lg-8">
+                                <label class="form-control-label">Product Four</label>
+                                <div class="custom-file">
+                                    <input type="file" class="custom-file-input" id="customFile" name="prodImages" 
+                                    (change)="uploadProductImageFour($event)">
+                                    <label class="custom-file-label" for="file">{{productFourImageName}}</label>    
+                                </div>
+                                
+                            </div>
+                            <div class="col-lg-4 mt-button">
+                                <button class="btn btn-primary btn-md" type="button" [disabled]="disableProdImageFourBtn" (click)="submitProdImageFour()">Upload</button>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="form-group col-lg-8">
+                                <label class="form-control-label">Product Five</label>
+                                <div class="custom-file">
+                                    <input type="file" class="custom-file-input" id="customFile" name="prodImages" 
+                                    (change)="uploadProductImageFive($event)">
+                                    <label class="custom-file-label" for="file">{{productFiveImageName}}</label>    
+                                </div>
+                                
+                            </div>
+                            <div class="col-lg-4 mt-button">
+                                <button class="btn btn-primary btn-md" type="button" [disabled]="disableProdImageFiveBtn" (click)="submitProdImageFive()">Upload</button>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+   
+        </div>
+      </div>
+    </div>
+</div>
+
+<!-- edit Product modal -->
+<div class="modal fade" id="editProductModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">{{addProductTitle}}</h5>       
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close" #closeaddProductBtn>
+            <span aria-hidden="true">&times;</span>
+          </button>    
+        </div>
+        <div class="modal-body" >
+
+            <form [formGroup]="editProductForm" (ngSubmit)="submitUpdateProduct()">
+                        <div class="row">
+                            <div class="form-group col-lg-6">
+                                <label class="form-control-label">Name</label>
+                                <input type="text" class="form-control" formControlName="productEngName" name="productEngName"  
+                                [ngClass]="{'is-invalid':(submitted && g['productEngName'].errors) ||(g['productEngName'].errors && g['productEngName'].touched) }">
+                                    <div *ngIf="(submitted && g['productEngName'].errors) ||(g['productEngName'].errors && g['productEngName'].touched)" class="invalid-feedback">
+                                        <div *ngIf="g['productEngName'].errors['required']">
+                                            Name is required
+                                        </div>
+                                 </div>
+                            </div>
+                            <div class="form-group col-lg-6">
+                                <label class="form-control-label">Name(Marathi)</label>
+                                <input type="text" class="form-control" formControlName="productName" name="productName"  
+                                [ngClass]="{'is-invalid':(submitted && g['productName'].errors) ||(g['productName'].errors && g['productName'].touched) }">
+                                    <div *ngIf="(submitted && g['productName'].errors) ||(g['productName'].errors && g['productName'].touched)" class="invalid-feedback">
+                                        <div *ngIf="g['productName'].errors['required']">
+                                            Name(Marathi) is required
+                                        </div>
+                                 </div>
+                            </div>
+                            
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-lg-6">
+                                <label class="form-control-label">Category</label>
+                                <select class="custom-select"  formControlName="catId" name="catId" id="catId"
+                                [ngClass]="{'is-invalid':(submitted && g['catId'].errors) ||(g['catId'].errors && g['catId'].touched) }">
+                                <option value="" [selected]="''">Choose...</option>
+                                    <option *ngFor="let item of productCategoryList" [ngValue]="item.categoryId">
+                                        {{item.categoryName }}</option>
+                                </select>
+                                  <div *ngIf="(submitted && g['catId'].errors) ||(g['catId'].errors && g['catId'].touched)" class="invalid-feedback">
+                                        <div *ngIf="g['catId'].errors['required']">
+                                            Category is required
+                                        </div>
+                                 </div>
+                            </div>
+                            <div class="form-group col-lg-6">
+                                <label class="form-control-label">Unit</label>
+                                <select class="custom-select"  formControlName="unitId" name="unitId" id="unitId"
+                                [ngClass]="{'is-invalid':(submitted && g['unitId'].errors) ||(g['unitId'].errors && g['unitId'].touched) }">
+                                <option value="" [selected]="''">Choose..</option>
+                                    <option *ngFor="let item of unitList" [ngValue]="item.unitId">
+                                        {{item.unitName }}</option>
+                                    
+                                  </select>
+                                    <div *ngIf="(submitted && g['unitId'].errors) ||(g['unitId'].errors && g['unitId'].touched)" class="invalid-feedback">
+                                        <div *ngIf="g['unitId'].errors['required']">
+                                            Unit is required
+                                        </div>
+                                 </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-lg-6">
+                                <label class="form-control-label">Sales Tax Group</label>
+                                <select class="custom-select"  formControlName="saleTaxId" name="saleTaxId" id="saleTaxId"
+                                [ngClass]="{'is-invalid':(submitted && g['saleTaxId'].errors) ||(g['saleTaxId'].errors && g['saleTaxId'].touched) }">
+                                <option value="" [selected]="''">Choose...</option>
+                                    <option *ngFor="let item of taxSlotList" [ngValue]="item.taxId">
+                                        {{item.taxName }}</option>
+                                </select>
+                                <div *ngIf="(submitted && g['saleTaxId'].errors) ||(g['saleTaxId'].errors && g['saleTaxId'].touched)" class="invalid-feedback">
+                                    <div *ngIf="g['saleTaxId'].errors['required']">
+                                            Sales Tax Group is required
+                                    </div>
+                                 </div>
+                            </div>                    
+                            <div class="form-group col-lg-6">
+                                <label class="form-control-label">Brand</label>
+                                <select class="custom-select"  formControlName="brandId" name="brandId" id="brandId"
+                                [ngClass]="{'is-invalid':(submitted && g['brandId'].errors) ||(g['brandId'].errors && g['brandId'].touched) }">
+                                <option value="" [selected]="''">Choose...</option>
+                                    <option *ngFor="let item of productBrandList" [ngValue]="item.brandId">
+                                        {{item.brandName }}</option>
+                                </select>
+                                <div *ngIf="(submitted && g['brandId'].errors) ||(g['brandId'].errors && g['brandId'].touched)" class="invalid-feedback">
+                                    <div *ngIf="g['brandId'].errors['required']">
+                                            Brand is required
+                                    </div>
+                                 </div>
+                            </div>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="form-group col-lg-6">
+                                <label class="form-control-label">HSN Code</label>
+                                <input type="text" class="form-control" formControlName="hsnCode" name="hsnCode"  
+                                [ngClass]="{'is-invalid':(submitted && g['hsnCode'].errors) ||(g['hsnCode'].errors && g['hsnCode'].touched) }">
+                                    <div *ngIf="(submitted && g['hsnCode'].errors) ||(g['hsnCode'].errors && g['hsnCode'].touched)" class="invalid-feedback">
+                                        <div *ngIf="g['hsnCode'].errors['required']">
+                                            HSN Code is required
+                                        </div>
+                                 </div>
+                            </div>
+                            <div class="form-group col-lg-6">
+                                <label class="form-control-label d-flex">Bar Code
+                                <span class="barcode-check">
+                                    <input class="form-check-input" type="checkbox" value="">
+                                    <label class="form-check-label" for="flexCheckChecked">AutoGenerate</label>
+                                </span> 
+                                </label>
+                                
+                                <input type="text" class="form-control" formControlName="barcode" name="barcode"  
+                                [ngClass]="{'is-invalid':(submitted && g['barcode'].errors) ||(g['barcode'].errors && g['barcode'].touched) }">
+                                    <div *ngIf="(submitted && g['barcode'].errors) ||(g['barcode'].errors && g['barcode'].touched)" class="invalid-feedback">
+                                        <div *ngIf="g['barcode'].errors['required']">
+                                            Bar Code is required
+                                        </div>
+                                 </div>
+                            </div>
+                        </div>
+
+                     
+                        <div class="row">
+                            <div class="form-group col-lg-12">
+                                <label class="form-control-label">Description</label>
+                                <textarea formControlName="description" name="description"  class="form-control"  id="description" rows="3"
+                                [ngClass]="{'is-invalid':(submitted && g['description'].errors) ||(g['description'].errors && g['description'].touched) }"
+                                ></textarea>
+                                <div *ngIf="(submitted && g['description'].errors) ||(g['description'].errors && g['description'].touched)" class="invalid-feedback">
+                                        <div *ngIf="g['description'].errors['required']">
+                                            Description is required
+                                        </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+        
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-primary" [disabled]="isItemAdded">Save</button>
+                          </div>
+            </form>
+               
+        </div>
+      </div>
+    </div>
+</div>
+ 
+<div class="modal fade" id="deleteProductModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Confirmation</h5>
+         
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close" #closeDeleteProductBtn>
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+             <p>Are you sure you want to delete this product?</p>
+             <div class="modal-footer">
+                <button type="submit" class="btn btn-primary" (click)="deleteProduct()" [disabled]="isItemAdded">Yes</button>
+              </div>
+        </div>
+      </div>
+    </div>
+</div>
+
+
+
+
+

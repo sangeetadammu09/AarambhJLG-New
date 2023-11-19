@@ -1,0 +1,66 @@
+<!-- Page body -->
+<div class="page-body">
+    <div class="container-xl">
+      <div class="row row-cards">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <div class="col-9 mb-3 mt-2">
+                        <h3 class="card-title">Products List</h3>
+                    </div>
+                  </div>
+              <div class="container-xl mt-3" *ngIf="pageLoaded">
+                <div class="row row-deck row-cards"  *ngIf="productList.length != 0">
+                  <div class="col-sm-6 col-lg-3" *ngFor="let item of productList| paginate: { itemsPerPage: pageSize, currentPage: page, totalItems: total };
+                  let i = index"> 
+                  <!-- <div class="ribbon ribbon-top ribbon-bookmark bg-primary" >
+                    
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-filled" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 17.75l-6.172 3.245l1.179 -6.873l-5 -4.867l6.9 -1l3.086 -6.253l3.086 6.253l6.9 1l-5 4.867l1.179 6.873z" /></svg>
+                  </div> -->
+                  <!-- <div class="ribbon ribbon-top ribbon-corner bg-maroon">Sale!</div> -->
+                  
+                    <div class="card">
+                      <!-- <div class="ribbon ribbon-top ribbon-bookmark-h bg-maroon">Sale!</div>
+                      <div class="ribbon ribbon-top ribbon-bookmark-h ribbon-xl text-vertical">Sale!</div> -->
+                      <div class="ribbon ribbon-top ribbon-corner bg-green">Sale!</div> 
+                      
+                      <img class="card-img-top product-view" [src]="item.url" alt="Product Image">
+                      <div class="card-body">
+                        <h5 class="card-title" style="font-family:Tiro Devanagari Marathi;">{{item.productName}}</h5>
+                        <p class="card-text">{{item.regionalName}}</p>
+                        <p class="card-text">MRP: Rs. {{item.mrp}}</p>
+                        <p class="card-text">Sale Price: Rs. {{item.jlgSalePrice}}</p>
+                        <p class="card-text price-alert" *ngIf="item.priceUpdateMsg!=null">Alert : {{item.priceUpdateMsg}}</p>
+                      </div>
+                    </div>
+                  </div>
+                </div> 
+                <div class="card-footer d-flex align-items-center" style="background-color: #fff;"  *ngIf="productList.length != 0">
+                  <div class="col-lg-12 d-flex justify-content-end pagination-custom pt-2" *ngIf="productList.length != 0">
+                      <pagination-controls previousLabel="Prev"nextLabel="Next" [responsive]="true"
+                      (pageChange)="handlePageChange($event)"></pagination-controls>
+                  </div>
+                </div>
+                <div class="text-center mb-3" *ngIf="productList.length == 0">
+                  <p>No Product found</p>
+                </div>
+
+                </div>
+                <div class="container-xl mt-3" *ngIf="!pageLoaded">
+                  <div class="d-flex justify-content-center">
+                    <div class="spinner-border" role="status">
+                      <span class="sr-only">Loading...</span>
+                    </div>
+                          &nbsp;
+                      <h3 class="text-center mr-2">Data loading. Please Hold on!</h3>
+                  </div>
+                </div>
+
+        
+      </div>
+    </div>
+</div>
+</div>
+</div>
+
+
