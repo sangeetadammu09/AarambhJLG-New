@@ -48,10 +48,11 @@ import { UserComponent } from './user/user.component';
 import { UserroleComponent } from './userrole/userrole.component';
 import { ValidityExpiringMembersComponent } from './validity-expiring-members/validity-expiring-members.component';
 import { ViewcartComponent } from './viewcart/viewcart.component';
+import { BrowserModule } from '@angular/platform-browser';
 
 @NgModule({
   imports: [
-    CommonModule,
+    CommonModule,BrowserModule,
     ReactiveFormsModule,
     NgxPaginationModule,SharedModule,PdfViewerModule
   

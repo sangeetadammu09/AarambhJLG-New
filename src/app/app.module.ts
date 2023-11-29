@@ -11,11 +11,7 @@ import {ReactiveFormsModule} from '@angular/forms';
 import { LoginComponent } from './common/login/login.component';
 import { ToastrModule } from 'ngx-toastr';
 import { AuthInterceptor } from './shared/interceptor/auth.interceptor';
-import { HeaderComponent } from './sharedcomponents/header/header.component';
-import { SidebarComponent } from './sharedcomponents/sidebar/sidebar.component';
-
-
-
+import { PagesModule } from './components/pages.module';
 @NgModule({
     imports: [
         CommonModule,
@@ -24,9 +20,9 @@ import { SidebarComponent } from './sharedcomponents/sidebar/sidebar.component';
         HttpClientModule,
         AppRoutingModule,
         FormsModule,ReactiveFormsModule,
-        ToastrModule.forRoot(),
+        ToastrModule.forRoot(),PagesModule
     ],
-    declarations: [AppComponent,LoginComponent,HeaderComponent, SidebarComponent],
+    declarations: [AppComponent,LoginComponent],
     providers: [
         {
             provide: HTTP_INTERCEPTORS,

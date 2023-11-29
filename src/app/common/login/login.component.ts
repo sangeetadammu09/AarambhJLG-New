@@ -70,14 +70,11 @@ export class LoginComponent implements OnInit {
          this._toastrService.success('Logged in successfully!');
          var roleList :any= JSON.parse(userData.roles);
          roleList.forEach((role:any) =>{
-           //console.log(role)
            (role == "SuperAdmin") ? (this._router.navigate(['/super-admin/dashboard']), localStorage.setItem('roleNo',"104")):
            (role == "Admin") ? (this._router.navigate(['/admin/dashboard']), localStorage.setItem('roleNo',"101")):
           (role == "RelationOfficer" || role == "SalesOfficer") ? (this._router.navigate(['/sales-relation-officer/dashboard']),localStorage.setItem('roleNo',"102")):
           (role == "SalesManager") ? (this._router.navigate(['/sales-manager-officer/dashboard']),localStorage.setItem('roleNo',"103")): null;
          })
-         
-         //
        }(err:any) =>{
         console.log(err)
        }},(error:any)=>{

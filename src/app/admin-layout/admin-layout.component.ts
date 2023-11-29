@@ -6,5 +6,13 @@ import { Component } from '@angular/core';
   styleUrls: ['./admin-layout.component.scss']
 })
 export class AdminLayoutComponent {
+  collapedSideBar: boolean;
 
+  constructor() {}
+
+  ngOnInit() {}
+
+  receiveCollapsed($event) {
+      this.collapedSideBar = $event;
+  }
 }

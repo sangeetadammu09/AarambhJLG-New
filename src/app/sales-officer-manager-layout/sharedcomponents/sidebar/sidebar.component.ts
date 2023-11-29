@@ -1,9 +1,10 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
-import { AdminMenuList, CustomerCareMenuList } from '../../../assets/menu';
+import { SalesManagerList } from '../../../../assets/menus/sales';
+
 
 @Component({
-    selector: 'app-sidebar',
+    selector: 'app-som-sidebar',
     templateUrl: './sidebar.component.html',
     styleUrls: ['./sidebar.component.scss']
 })
@@ -12,7 +13,7 @@ export class SidebarComponent implements OnInit {
     collapsed: boolean;
     showMenu: string;
     pushRightClass: string;
-    menuList = CustomerCareMenuList.data;
+    menuList = SalesManagerList.data;
 
     @Output() collapsedEvent = new EventEmitter<boolean>();
 
@@ -29,7 +30,7 @@ export class SidebarComponent implements OnInit {
         this.collapsed = false;
         this.showMenu = '';
         this.pushRightClass = 'push-right';
-       // console.log(this.menuList,'mmmmmmmmmmmmmmmmm')
+        console.log(this.menuList,'menu list')
     }
 
     eventCalled() {

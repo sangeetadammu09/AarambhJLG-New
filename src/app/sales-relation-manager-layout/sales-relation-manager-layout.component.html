@@ -1,0 +1,5 @@
+<app-srm-header></app-srm-header>
+<app-srm-sidebar (collapsedEvent)="receiveCollapsed($event)"></app-srm-sidebar>
+<section [ngClass]="{ collapsed: collapedSideBar }" class="main-container">
+    <router-outlet></router-outlet>
+</section>

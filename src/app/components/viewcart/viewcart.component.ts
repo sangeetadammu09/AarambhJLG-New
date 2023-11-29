@@ -2,7 +2,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { DataService } from 'src/app/common/utils/data.service';
+import { DataService } from '../../../app/common/utils/data.service';
 import { AdminService } from '../../../app/shared/services/admin.service';
 import { SalesrelationService } from '../../../app/shared/services/salesrelation.service';
 

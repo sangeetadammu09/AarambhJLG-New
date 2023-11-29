@@ -4,11 +4,11 @@ export const AdminList = {
 
     data: [
         {
-            id: 1,
+            id: 0,
             name: 'Dashboard',
             icon: 'fa-cog',
             isActive: true,
-            url: 'dashboard/',
+            url: 'dashboard',
             subMenus: []
         },
         {
@@ -16,47 +16,47 @@ export const AdminList = {
             name: 'Admin Master',
             icon: 'fa-users',
             isActive: true,
-            url: 'admin-master',
+            url: 'admin',
             subMenus: [
                 {
                     id: 0,
-                    menu: 'City',
-                    url: '/admin-master/city',
+                    name: 'City',
+                    url: '/admin/city',
                     icon: 'fa-building',
                     isActive: true,
                 },
                 {
                     id: 1,
-                    menu: 'Branch',
-                    url: '/admin-master/branch',
+                    name: 'Branch',
+                    url: '/admin/branch',
                     icon: 'fa-building',
                     isActive: true,
                 },
                 {
                     id: 2,
-                    menu: 'Unit',
-                    url: '/admin-master/unit',
+                    name: 'Unit',
+                    url: '/admin/unit',
                     icon: 'fa-building',
                     isActive: true,
                 },
                 {
                     id: 3,
-                    menu: 'Tax Slot',
-                    url: '/admin-master/tax-slot',
+                    name: 'Tax Slot',
+                    url: '/admin/tax-slot',
                     icon: 'fa-building',
                     isActive: true,
                 },
                 {
                     id: 4,
-                    menu: 'Installments',
-                    url: '/admin-master/installments',
+                    name: 'Installments',
+                    url: '/admin/installments',
                     icon: 'fa-building',
                     isActive: true,
                 },
                 {
                     id: 5,
-                    menu: 'Expense Type',
-                    url: '/admin-master/expense-type',
+                    name: 'Expense Type',
+                    url: '/admin/expense-type',
                     icon: 'fa-building',
                     isActive: true,
                 },
@@ -72,35 +72,35 @@ export const AdminList = {
             subMenus: [
                 {
                     id: 0,
-                    menu: 'Product Category',
+                    name: 'Product Category',
                     url: '/product/product-category',
                     icon: 'fa-building',
                     isActive: true,
                 },
                 {
                     id: 1,
-                    menu: 'Product Brand',
+                    name: 'Product Brand',
                     url: '/product/product-brand',
                     icon: 'fa-building',
                     isActive: true,
                 },
                 {
                     id: 2,
-                    menu: 'Product List',
+                    name: 'Product List',
                     url: '/product/product-list',
                     icon: 'fa-building',
                     isActive: true,
                 },
                 {
                     id: 3,
-                    menu: 'Product Price',
+                    name: 'Product Price',
                     url: '/product/product-price',
                     icon: 'fa-building',
                     isActive: true,
                 },
                 {
                     id: 4,
-                    menu: 'Product Details',
+                    name: 'Product Details',
                     url: '/product/product-details',
                     icon: 'fa-building',
                     isActive: true,
@@ -116,35 +116,35 @@ export const AdminList = {
             subMenus: [
                 {
                     id: 0,
-                    menu: 'User List',
+                    name: 'User List',
                     url: '/users/user-list',
                     icon: 'fa-user',
                     isActive: true,
                 },
                 {
                     id: 1,
-                    menu: 'User Role',
+                    name: 'User Role',
                     url: '/users/user-role',
                     icon: 'fa-user',
                     isActive: true,
                 },
                 {
                     id: 2,
-                    menu: 'User Contacts',
+                    name: 'User Contacts',
                     url: '/users/user-contacts',
                     icon: 'fa-phone',
                     isActive: true,
                 },
                 {
                     id: 2,
-                    menu: 'KYC',
+                    name: 'KYC',
                     url: '/users/user-kyc',
                     icon: 'fa-check',
                     isActive: true,
                 },
                 {
                     id: 2,
-                    menu: 'Kyc Failed Users',
+                    name: 'Kyc Failed Users',
                     url: '/users/kyc-failed-users',
                     icon: 'fa-phone',
                     isActive: true,
@@ -152,7 +152,7 @@ export const AdminList = {
             ]
         },
         {
-            id: 3,
+            id: 4,
             name: 'Center',
             icon: 'fa-building',
             isActive: true,
@@ -160,35 +160,35 @@ export const AdminList = {
             subMenus: [
                 {
                     id: 0,
-                    menu: 'Center List',
+                    name: 'Center List',
                     url: 'center-list',
                     icon: 'fa-building',
                     isActive: true,
                 },
                 {
                     id: 0,
-                    menu: 'Assign Leader',
+                    name: 'Assign Leader',
                     url: 'assign-leader',
                     icon: 'fa-user',
                     isActive: true,
                 },
                 {
                     id: 1,
-                    menu: 'Group-List',
+                    name: 'Group-List',
                     url: 'group-list',
                     icon: 'fa-building',
                     isActive: true,
                 },
                 {
                     id: 2,
-                    menu: 'Member List',
+                    name: 'Member List',
                     url: 'member-list',
                     icon: 'fa-users',
                     isActive: true,
                 },
                 {
                     id: 2,
-                    menu: 'Member Contacts',
+                    name: 'Member Contacts',
                     url: 'member-contacts',
                     icon: 'fa-phone',
                     isActive: true,
@@ -196,7 +196,7 @@ export const AdminList = {
             ]
         },
         {
-            id: 1,
+            id: 5,
             name: 'Order',
             icon: 'fa-pencil',
             isActive: true,
@@ -204,14 +204,14 @@ export const AdminList = {
             subMenus: [
                 {
                     id: 0,
-                    menu: 'Dispatched Orders',
+                    name: 'Dispatched Orders',
                     url: 'dispatched-orders',
                     icon: 'fa-book',
                     isActive: true,
                 },
                 {
                     id: 1,
-                    menu: 'Completed Orders',
+                    name: 'Completed Orders',
                     url: 'completed-orders',
                     icon: 'fa-book',
                     isActive: true,
@@ -219,7 +219,7 @@ export const AdminList = {
             ]
         },
         {
-            id: 1,
+            id: 6,
             name: 'Payment',
             icon: 'fa-pencil',
             isActive: true,
@@ -227,14 +227,14 @@ export const AdminList = {
             subMenus: [
                 {
                     id: 0,
-                    menu: 'Collection History',
+                    name: 'Collection History',
                     url: 'collection-history',
                     icon: 'fa-money',
                     isActive: true,
                 },
                 {
                     id: 1,
-                    menu: 'Centerwise Collection',
+                    name: 'Centerwise Collection',
                     url: 'centerwise-collection',
                     icon: 'fa-money',
                     isActive: true,
@@ -242,7 +242,7 @@ export const AdminList = {
             ]
         },
         {
-            id: 1,
+            id: 7,
             name: 'Setting',
             icon: 'fa-cog',
             isActive: true,
@@ -250,7 +250,7 @@ export const AdminList = {
             subMenus: [
                 {
                     id: 0,
-                    menu: 'Change Password',
+                    name: 'Change Password',
                     url: 'change-password',
                     icon: 'fa-wrench',
                     isActive: true,
@@ -267,12 +267,12 @@ export const SuperAdminList = {
     statusCode: 200,
 
     data: [
-        {
+        { 
             id: 1,
             name: 'Dashboard',
             icon: 'fa-cog',
             isActive: true,
-            url: 'dashboard',
+            url: 'dashboard/',
             subMenus: []
         },
         {
@@ -280,19 +280,19 @@ export const SuperAdminList = {
             name: 'Admin Master',
             icon: 'fa-users',
             isActive: true,
-            url: 'admin-master',
+            url: 'admin',
             subMenus: [
                 {
                     id: 0,
-                    menu: 'City',
-                    url: 'city',
+                    name: 'City',
+                    url: '/super-admin/city',
                     icon: 'fa-building',
                     isActive: true,
                 },
                 {
                     id: 1,
-                    menu: 'Branch',
-                    url: 'branch',
+                    name: 'Branch',
+                    url: '/super-admin/branch',
                     icon: 'fa-building',
                     isActive: true,
                 }
@@ -308,8 +308,8 @@ export const SuperAdminList = {
             subMenus: [
                 {
                     id: 0,
-                    menu: 'Product Category',
-                    url: 'product-category',
+                    name: 'Product Category',
+                    url: '/super-admin/product-category',
                     icon: 'fa-building',
                     isActive: true,
                 }
@@ -325,15 +325,15 @@ export const SuperAdminList = {
             subMenus: [
                 {
                     id: 0,
-                    menu: 'Collection History',
-                    url: 'collection-history',
+                    name: 'Collection History',
+                    url: '/super-admin/collection-history',
                     icon: 'fa-money',
                     isActive: true,
                 },
                 {
                     id: 1,
-                    menu: 'Centerwise Collection',
-                    url: 'centerwise-collection',
+                    name: 'Centerwise Collection',
+                    url: '/super-admin/centerwise-collection',
                     icon: 'fa-money',
                     isActive: true,
                 }

@@ -1,0 +1,52 @@
+<nav class="navbar navbar-expand-lg fixed-top">
+  <a (click)="toggleSidebar()" class="navbar-toggler">
+    <i class="fa fa-bars fa-lg"></i>
+  </a>
+  <!-- <button (click)="toggleSidebar()" class="navbar-toggler" type="button">Click
+  </button> -->
+    <a class="navbar-brand-custom">AarambhJLG- Admin</a>
+    <div class="collapse navbar-collapse">
+       
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item me-3">{{userCity}}</li>
+
+            <!-- <li class="nav-item dropleft" ngbDropdown>
+                <a class="nav-link" href="javascript:void(0)" ngbDropdownToggle>
+                    <i class="fa fa-user"></i>{{name}}<b class="caret"></b>
+                </a>
+                <div class="dropdown-menu-right" ngbDropdownMenu>
+                    <a class="dropdown-item" href="javascript:void(0)">
+                        <i class="fa fa-fw fa-user"></i> Profile
+                    </a>
+                    <a class="dropdown-item" href="javascript:void(0)">
+                        <i class="fa fa-fw fa-gear"></i> Settings
+                    </a>
+                    <a (click)="onLoggedout()" [routerLink]="['/login']" class="dropdown-item">
+                        <i class="fa fa-fw fa-power-off"></i> Log Out
+                    </a>
+                </div>
+            </li> -->
+            <li class="nav-item dropdown">
+                <a href="#" class="nav-link d-flex lh-1 text-reset p-0" data-bs-toggle="dropdown" aria-label="Open user menu">
+                  <span class="avatar avatar-sm">
+                    <img class="card-img-top"  [src]="userPhoto" alt="User Document">
+                  </span>
+                  <div class="d-none d-xl-block ps-2">
+                    <div class="text-white">{{userName}}</div>
+                    <div class="mt-1 small text-white">
+                      <span *ngFor="let item of userRoles">{{item.name}}, &nbsp;</span>
+                    </div>
+                  </div>
+                </a>
+                <div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                  <a  class="dropdown-item"><i class="fa fa-cog"style="font-size:18px;"></i>&nbsp;&nbsp; Settings</a>
+                  <a  class="dropdown-item" (click)="myProfile()"><i class="fa fa-user-circle-o" style="font-size:18px;"></i>&nbsp;&nbsp; My Profile</a>
+                  <a  class="dropdown-item" (click)="changePassword()"><i class="fa fa-share-square" style="font-size:18px;"></i>&nbsp;&nbsp; Change Password</a>
+                  <a  class="dropdown-item" (click)="logout()"><i class="fa fa-sign-out" style="font-size:18px;"></i>&nbsp;&nbsp;  Logout</a>
+                </div>
+              </li>
+           
+            <li></li>
+        </ul>
+    </div>
+</nav>

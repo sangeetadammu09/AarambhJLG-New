@@ -12,6 +12,15 @@ const routes: Routes = [
     {
         path: 'admin',loadChildren: () => import('./admin-layout/admin-layout.module').then((m) => m.AdminLayoutModule),
     },
+    {
+        path: 'super-admin',loadChildren: () => import('./super-admin-layout/super-admin-layout.module').then((m) => m.SuperAdminLayoutModule),
+    },
+    {
+        path: 'sales-relation-officer',loadChildren: () => import('./sales-relation-manager-layout/sales-relation-manager-layout.module').then((m) => m.SalesRelationManagerLayoutModule),
+    },
+    {
+        path: 'sales-manager-officer',loadChildren: () => import('./sales-officer-manager-layout/sales-officer-manager-layout.module').then((m) => m.SalesOfficerManagerLayoutModule),
+    },
     { 
         path: 'signup', loadChildren: () => import('./common/signup/signup.module').then((m) => m.SignupModule) },
     {

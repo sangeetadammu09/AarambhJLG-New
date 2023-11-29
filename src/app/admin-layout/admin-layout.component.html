@@ -1,1 +1,5 @@
-<p>admin-layout works!</p>
+<app-admin-header></app-admin-header>
+<app-admin-sidebar (collapsedEvent)="receiveCollapsed($event)"></app-admin-sidebar>
+<section [ngClass]="{ collapsed: collapedSideBar }" class="main-container">
+    <router-outlet></router-outlet>
+</section>

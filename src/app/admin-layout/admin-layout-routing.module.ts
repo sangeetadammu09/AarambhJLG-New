@@ -28,36 +28,46 @@ import { UserContactsComponent } from '../components/user-contacts/user-contacts
 import { UserKycComponent } from '../components/user-kyc/user-kyc.component';
 import { UserComponent } from '../components/user/user.component';
 import { UserroleComponent } from '../components/userrole/userrole.component';
+import { AdminLayoutComponent } from './admin-layout.component';
 
 const routes: Routes = [
-    { path:'product-category', component: ProductCategoryComponent },
-     { path:'product-brand', component: ProductBrandComponent },
-     { path:'product-price', component: ProductPriceComponent },
-     { path:'product-details', component: ProductDetailComponent },
-     { path:'unit', component: UnitComponent },
-     { path:'user-list', component: UserComponent },
-     { path:'user-kyc', component: UserKycComponent },
-     { path:'center-list', component: CenterComponent },
-     { path:'member-list', component: MemberComponent },
-     { path:'group-list', component: GroupComponent },
-     { path:'user-role', component: UserroleComponent },
-     { path:'tax-slot', component: TaxSlotComponent },
-     { path:'product-list', component: ProductsComponent },
-     { path:'city', component: CityComponent },
-     { path:'branch', component: BranchComponent },
-     { path:'expense-type', component: ExpenseTypeComponent },
-     { path:'installments', component: InstallmentsComponent },
-     { path:'change-password', component: ChangePasswordComponent },
-     { path:'user-contacts', component: UserContactsComponent },
-     { path:'member-contacts', component: MemberContactsComponent },
-     { path:'my-profile', component: ProfileComponent },
-     { path:'dashboard', component: DashboardComponent },
-     { path:'assign-leader', component:AssignLeaderComponent },
-     { path:'kyc-failed-users', component: KycFailedUsersComponent },
-     {path:'dispatched-orders', component: DispatchedOrdersComponent },
-     {path:'completed-orders', component: CompletedOrdersComponent },
-     {path:'collection-history', component: CollectionHistoryComponent},
-     {path:'centerwise-collection',component: CenterwiseCollectionComponent},
+
+    {
+        path: '',
+        component: AdminLayoutComponent,
+        children: [
+            { path: '', redirectTo: 'dashboard', pathMatch: 'prefix' },
+            { path:'product-category', component: ProductCategoryComponent },
+            { path:'product-brand', component: ProductBrandComponent },
+            { path:'product-price', component: ProductPriceComponent },
+            { path:'product-details', component: ProductDetailComponent },
+            { path:'unit', component: UnitComponent },
+            { path:'user-list', component: UserComponent },
+            { path:'user-kyc', component: UserKycComponent },
+            { path:'center-list', component: CenterComponent },
+            { path:'member-list', component: MemberComponent },
+            { path:'group-list', component: GroupComponent },
+            { path:'user-role', component: UserroleComponent },
+            { path:'tax-slot', component: TaxSlotComponent },
+            { path:'product-list', component: ProductsComponent },
+            { path:'city', component: CityComponent },
+            { path:'branch', component: BranchComponent },
+            { path:'expense-type', component: ExpenseTypeComponent },
+            { path:'installments', component: InstallmentsComponent },
+            { path:'change-password', component: ChangePasswordComponent },
+            { path:'user-contacts', component: UserContactsComponent },
+            { path:'member-contacts', component: MemberContactsComponent },
+            { path:'my-profile', component: ProfileComponent },
+            { path:'dashboard', component: DashboardComponent },
+            { path:'assign-leader', component:AssignLeaderComponent },
+            { path:'kyc-failed-users', component: KycFailedUsersComponent },
+            {path:'dispatched-orders', component: DispatchedOrdersComponent },
+            {path:'completed-orders', component: CompletedOrdersComponent },
+            {path:'collection-history', component: CollectionHistoryComponent},
+            {path:'centerwise-collection',component: CenterwiseCollectionComponent},
+          
+        ]
+    }
 ];
 
 @NgModule({

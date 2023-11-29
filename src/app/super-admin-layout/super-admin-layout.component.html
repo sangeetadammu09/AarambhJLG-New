@@ -1,0 +1,5 @@
+<app-superadmin-header></app-superadmin-header>
+<app-superadmin-sidebar (collapsedEvent)="receiveCollapsed($event)"></app-superadmin-sidebar>
+<section [ngClass]="{ collapsed: collapedSideBar }" class="main-container">
+    <router-outlet></router-outlet>
+</section>
