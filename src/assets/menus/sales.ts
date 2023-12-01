@@ -156,8 +156,8 @@ export const SalesList = {
         {
           id: 0,
           name: 'Payment Collection',
-          url: 'collections',
-          icon: '/sales-relation-officer/fa-money',
+          icon: 'fa-money',
+          url: '/sales-relation-officer/collections',
           isActive: true,
         },
         {

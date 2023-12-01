@@ -34,8 +34,7 @@ const routes: Routes = [
         component: SalesRelationManagerLayoutComponent,
         children: [
             { path: '', redirectTo: 'dashboard', pathMatch: 'prefix' },
-            { path:'center-list', component: CenterComponent },
-            
+            { path:'center-list', component: CenterComponent },     
             { path:'member-kyc', component: MemberKycComponent },
             { path:'member-list', component: MemberComponent },
             { path:'my-profile', component: ProfileComponent },
