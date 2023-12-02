@@ -14,7 +14,7 @@ export class MasterService {
   constructor(private router: Router) { }
 
   isLoggedIn(){
-    return localStorage.getItem('userToken') != null;
+    return localStorage.getItem(TOKEN_KEY) != null;
   }
 
   isTokenExpired(token: string) {
@@ -35,10 +35,6 @@ export class MasterService {
     window.localStorage.removeItem(TOKEN_KEY);
     window.localStorage.setItem(TOKEN_KEY, token);
 
-    // const user = this.getUser();
-    // if (user.id) {
-    //   this.saveUser({ ...user, accessToken: token });
-    // }
   }
 
   public getToken(): string | null {

@@ -22,6 +22,8 @@ export class LoginComponent implements OnInit {
   loginText = "Login"
   loggedInBoolean: boolean = false;
   @ViewChild('mypassword') mypassword:any;
+  togglePasswordIcon: boolean = false;
+  @ViewChild('inputpassword') inputpassword!:ElementRef;
 
  constructor( private _router: Router, private _fb: FormBuilder,private _toastrService: ToastrService, 
    private _commonService: CommonService, private masterService: MasterService, private errorHandlerService: ErrorHandleService) { 
@@ -89,14 +91,14 @@ export class LoginComponent implements OnInit {
    }
  }
 
- showpassword() {
-   var passwordType = this.mypassword.nativeElement.type;
-   if (passwordType == "password") {
-     this.mypassword.nativeElement.type = "text";
-   } else {
-     this.mypassword.nativeElement.type = "password";
-   }
- }
+ togglePassword(){
+  this.togglePasswordIcon = !this.togglePasswordIcon;
+  if(this.togglePasswordIcon){
+    this.inputpassword.nativeElement.setAttribute("type", 'text');
+  }else{
+    this.inputpassword.nativeElement.setAttribute("type", 'password');
+  }
+}
 
 }
 
